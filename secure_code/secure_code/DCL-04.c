@@ -45,6 +45,14 @@
  *
  * 열거형을 추천...
  *
+ *  정리하면 다음과 같다.
+ *
+ * | 방식     |  평가시점  |메모리 소비|디버깅 시의 심볼|타입 체크|컴파일 타임 상수 표현식|
+ * | 열거형   | 컴파일 타임| 없음      | 있음           | 있음    | 있음                  |
+ * | const지정| 런타임     | 있음      | 있음           | 있음    | 없음                  |
+ * | 매크로   | 전처리     | 없음      | 없음           | 없음    | 있음                  |
+ *
+ *
  */
 
 
@@ -52,6 +60,7 @@
 
 #if 0
 // 위험한 코드 1.
+// 정수 리터럴에 대한 의미가 분명하지 않다.
 void draw_color(int color) {
     switch (color) {
     case 0: /* ... */ break;
@@ -70,6 +79,7 @@ int main() {
 
 #if 0
 // 해결 방법
+// 심볼릭 상수로 변경하여 의미를 분명하게 한다.
 enum { RED, GREEN, BLUE };
 void draw_color(int color) {
     switch (color) {
@@ -89,6 +99,7 @@ int main() {
 
 #if 0
 // 위험한 코드 2.
+// 버퍼의 크기가 일치하지 않아 버퍼 오버플로우가 발생할 수 있다.
 #include <stdio.h>
 
 int main() {
@@ -104,6 +115,7 @@ int main() {
 
 #if 0
 // 해결 방법 1.
+// 열거형을 사용하여 해결한다.
 #include <stdio.h>
 
 enum { BUFF_SIZE = 16 };
@@ -121,6 +133,7 @@ int main() {
 
 #if 0
 // 해결 방법 2.
+// sizeof() 연산자를 이용하여 해결한다.
 #include <stdio.h>
 
 int main() {
